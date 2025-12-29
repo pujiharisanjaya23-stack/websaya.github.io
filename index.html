@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Untuk Kamu ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+
+    background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#ffdde1);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 80px 20px;
+    position: relative;
+    z-index: 3;
+}
+
+/* BLUR BLOBS */
+.blob {
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    filter: blur(130px);
+    animation: float 20s infinite alternate;
+    z-index: 1;
+}
+.blob.one { top: -150px; left: -150px; }
+.blob.two { bottom: -200px; right: -150px; animation-duration: 25s; }
+
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(150px); }
+}
+
+/* TEXT */
+h1 {
+    font-size: 3em;
+    background: linear-gradient(90deg,#fff,#ffe6ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255,255,255,0.4); }
+    to { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
+}
+
+.subtitle { opacity: 0.9; margin-bottom: 30px; }
+
+/* BUTTON */
+button {
+    background: white;
+    color: #ff5f7e;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover { transform: scale(1.1); }
+
+/* MESSAGE */
+#message {
+    display: none;
+    margin: 30px 0;
+    background: rgba(255,255,255,0.25);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* GALLERY */
+.gallery img {
+    width: 45%;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* HEARTS */
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+.heart {
+    position: absolute;
+    top: -10vh;
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    to { transform: translateY(110vh) scale(1.3); opacity: 0; }
+}
+
+/* CLICK POP */
+@keyframes pop {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(2); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="blob one"></div>
+<div class="blob two"></div>
+<div class="hearts"></div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" src="lagu.mp3" loop></audio>
+
+<div class="container">
+    <h1>Hai, Sayangku ❤️</h1>
+    <p class="subtitle">Terima kasih sudah hadir dalam hidupku</p>
+
+    <button onclick="showMessage()">Klik Aku 💌</button>
+
+    <div id="message">
+        Aku tidak tahu apa yang akan terjadi di masa depan,<br>
+        tapi satu hal yang aku yakin:<br>
+        aku ingin menjalaninya bersamamu 🤍<br><br>
+        Terima kasih sudah menjadi rumah untuk hatiku.
+    </div>
+
+    <h2>Kenangan Kita 📸</h2>
+    <div class="gallery">
+        <img src="assets/20251229_152515.jpg">
+        <img src="assets/20251229_152618.jpg">
+    </div>
+
+    <h2>Countdown Hari Spesial ⏳</h2>
+    <div id="countdown"></div>
+</div>
+
+<style>
+
+
+/* PAKSA WARNA TEKS */
+h1, h2, p, span, button {
+    color: #0bf5af !important;
+    -webkit-text-fill-color: #1a1319 !important;
+    background: none !important;
+}
+
+
+</style>
+
+<script>
+// ===== MUSIC AUTO =====
+const music = document.getElementById("bgMusic");
+music.volume = 0;
+
+function fadeInMusic() {
+    if (music.paused) music.play();
+    let v = 0;
+    const fade = setInterval(() => {
+        if (v < 0.7) {
+            v += 0.02;
+            music.volume = v;
+        } else {
+            clearInterval(fade);
+        }
+    }, 200);
+}
+
+document.addEventListener("click", fadeInMusic, { once: true });
+
+// MESSAGE
+function showMessage() {
+    document.getElementById("message").style.display = "block";
+}
+
+// COUNTDOWN
+const specialDate = new Date("2025-02-14");
+function updateCountdown() {
+    const now = new Date();
+    const diff = specialDate - now;
+    const cd = document.getElementById("countdown");
+    if (diff <= 0) {
+        cd.innerHTML = "Hari spesial kita sudah tiba ❤️";
+        return;
+    }
+    const days = Math.floor(diff / (1000*60*60*24));
+    cd.innerHTML = `${days} hari lagi menuju hari spesial kita 💕`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// HEARTS
+const hearts = document.querySelector(".hearts");
+function createHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤";
+    h.style.left = Math.random()*100+"vw";
+    h.style.fontSize = (14+Math.random()*20)+"px";
+    h.style.animationDuration = (3+Math.random()*3)+"s";
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHeart, 220);
+
+// CLICK POP
+document.addEventListener("click", e => {
+    const h = document.createElement("div");
+    h.innerHTML = "💖";
+    h.style.position = "absolute";
+    h.style.left = e.pageX+"px";
+    h.style.top = e.pageY+"px";
+    h.style.fontSize = "24px";
+    h.style.pointerEvents = "none";
+    h.style.animation = "pop 1s ease forwards";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),1000);
+});
+</script>
+
+</body>
+</html>

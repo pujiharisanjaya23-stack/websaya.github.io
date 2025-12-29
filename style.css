@@ -1,0 +1,31 @@
+/* ===== FORCE TEXT COLOR FIX ===== */
+
+/* JUDUL UTAMA */
+h1 {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #c94f7c !important;
+    color: #c94f7c !important;
+    text-shadow: 0 4px 15px rgba(201,79,124,0.45);
+}
+
+/* SUBTITLE */
+.subtitle,
+p {
+    color: #5a3d4e !important;
+}
+
+/* ISI SURAT */
+#message {
+    color: #5a3d4e !important;
+}
+
+/* JUDUL SECTION */
+h2 {
+    color: #b85c7a !important;
+}
+
+/* TOMBOL */
+button {
+    color: #c94f7c !important;
+}
